@@ -1,0 +1,38 @@
+//glob
+def struct t_prod ( codp,pu,stk)
+
+//main
+- t_prod v_prod[30]; // n sale la cantidad de productos leídos en el archivo de productos
+
+- func generar_archivo // externo
+
+- func cargar_vec:
+    - variable para tomar valor registro
+    - contador 
+    - abrir archivo
+        while:
+        - cargar codp,pu,stk en el vector en cada pasada y subir contador.
+
+
+-func ventas
+    for vec 0 -> N 
+            - print codp
+    while
+    - leer cod prod ingresado en una variable temp (cero para salir)
+    - check stock disponible (como los vuelos)
+    if 
+        stock ok -> actualizo stk vec
+        not ok -> print err
+
+-func actualizar_archivo
+    abrir archivo
+    for 0-->n
+        vec_info -> archivo
+    cerrar archivo
+
+-func print
+    abrir archivo
+    while !feof archivo
+        leer en var_temp
+        cout codp pu stk
+    cerrar archivo

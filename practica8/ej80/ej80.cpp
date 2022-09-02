@@ -34,11 +34,12 @@ void carg_vec(t_alu vec[],int &x){
 
 int calc_prom(t_alu vec[], int x){
     int sum=0; int prom; int z=0;
-    for (int n=0;n<x+1;n++){
+    for (int n=0;n<x;n++){
         sum+=vec[n].edad;
         z++;
     }
-    return prom=sum/z;
+    prom=sum/z;
+    return prom;
 }
 
 main(){
@@ -47,7 +48,7 @@ main(){
     carg_vec(v_alu, z);
     int prom=calc_prom(v_alu,z);
     cout << "Edad promedio del curso: " << prom << endl;
-    for (int n=0;n<z+1;n++){
+    for (int n=0;n<z;n++){
         if (v_alu[n].edad > prom){
             cout << v_alu[n].nomb << " supera la edad promedio" << endl;
         }

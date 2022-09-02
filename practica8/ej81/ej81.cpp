@@ -20,26 +20,19 @@ struct t_vuelo{
     int pac;
 };
 
-void print_vue(){
-    t_vuelo tmp;
-    FILE *fl;
-    fl=fopen("ej81-vuelos.dat","rb");
-    fread(&tmp,sizeof(tmp),1,fl);
-    while(!feof(fl)){
-        cout << "cod_vuelo: " << tmp.cod << " pasajes disp: " << tmp.psd << " pasajes no vend: " << tmp.psnv << endl;
+void print_vue(t_vuelo vec[], int j){
+    //t_vuelo tmp;
+    cout << "ciclos a imprimir: " << j << endl;
+    for (int x=0; x < j; x++){
+        cout << "cod_vuelo: " << vec[x].cod << " pasajes disp: " << vec[x].psd << " pasajes no vend: " << vec[x].psnv << endl;
     }
-    fclose(fl);
 }
 
-void print_ped(){
-    t_vuelo tmp;
-    FILE *fl;
-    fl=fopen("ej81-vuelos.dat","rb");
-    fread(&tmp,sizeof(tmp),1,fl);
-    while(!feof(fl)){
-        cout << "dni: " << tmp.dni << " codv: " << tmp.cod << " pasajes a comprar: " << tmp.pac << endl;
+void print_ped(t_vuelo vec[], int j){
+    cout << "ciclos a imprimir: " << j << endl;
+    for (int x=0; x < j; x++){
+        cout << "dni: " << vec[x].dni << " codv: " << vec[x].cod << " pasajes a comprar: " << vec[x].pac << endl;
     }
-    fclose(fl);
 }
 
 void generar_archivo_pedidos(){
@@ -89,7 +82,7 @@ void carg_vuelos(t_vuelo vec[],int &x){
         fread(&vec[x],sizeof(vec[x]),1,fl);
     }
     fclose(fl);
-
+    cout << "cantidad de registros: " << x << endl;
 }
 
 void carg_pedidos(t_vuelo vec[], int &x){
@@ -101,21 +94,33 @@ void carg_pedidos(t_vuelo vec[], int &x){
         fread(&vec[x],sizeof(vec[x]),1,fl);
     }
     fclose(fl);
-
+    cout << "cantidad de registros: " << x << endl;
 }
 
 int buscar_cod_vuelo(t_vuelo vec[], int tp,  int cod){
-    int x=0;
-    while((x < tp+1) or (vec[x].cod != cod)) {
+    int pos;
+    /*while((x < tp) or (vec[x].cod != cod)) {
         x++;
+    }*/
+
+    for (int x=0; x <tp; x++){
+        cout << vec[x].cod << endl;
+        if (cod == vec[x].cod){
+            pos = x;
+            break;
+        }
     }
-    return x;
+    cout << "cod de vuelo: " << cod << " en la posicion: " << pos << " cod: " << vec[pos].cod << endl; 
+    return pos;
 }
 
 void compras(t_vuelo vec_v[], int v, t_vuelo vec_p[], int p){
     int tmp;
-    for (int x=0; x < p+1; x++){
+    cout << "tope vuelos: " << v << " tope pedidos: " << p << endl;
+    for (int x=0; x < p; x++){
+        cout << "vuelta numero: " << x << endl;
         tmp = buscar_cod_vuelo(vec_v, v, vec_p[x].cod);
+        cout << "tmp posicion codigo de vuelo: " << tmp << endl;
         if (vec_p[x].pac <= vec_v[tmp].psd){
             cout << "dni: " << vec_p[x].dni << " pasajes vendidos: " << vec_p[x].pac << " cod_vuelo: " << vec_p[x].cod << endl;
         }
@@ -123,13 +128,10 @@ void compras(t_vuelo vec_v[], int v, t_vuelo vec_p[], int p){
             cout << "cantidad de pasajes no disponibles" << endl;
             vec_v[tmp].psnv+=vec_p[x].pac;
         }
-
-
-
     }
-    for (int x=0; x<v+1; x++){
+    for (int x=0; x<v; x++){
         if (vec_v[x].psnv !=0){
-            cout << "cod_vuelo: " << vec_v[x].cod << " pasajes disponibles: " << vec_v[x].psd << " pasajes no vendidos por falta de disp: " << vec_v[x].psnv << endl;
+            cout << "cod_vuelo: " << vec_v[x].cod << " pasajes disponibles: " << vec_v[x].psd << " pasajes no vendidos por falta de disp: " << vec_v[x].psnv - vec_v[x].psd << endl;
         }
     }
 }
@@ -139,7 +141,6 @@ int main(){
     int z=0; int y=0; int sw;
     t_vuelo v_vuelos[500];
     t_vuelo v_pedidos[500];
-    
     cout << "1-cargar vec vuelos" << endl;
     cout << "2-cargar vec pedidos" << endl;
     cout << "3-procesar pedidos" << endl;
@@ -176,12 +177,12 @@ int main(){
         break;
 
         case 6: 
-        print_vue();
+        print_vue(v_vuelos,z);
         cout <<"ok"<<endl;
         break;
 
         case 7: 
-        print_ped();
+        print_ped(v_pedidos,y);
         cout <<"ok"<<endl;
         break;
     }

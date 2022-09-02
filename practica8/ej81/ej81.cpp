@@ -104,23 +104,23 @@ int buscar_cod_vuelo(t_vuelo vec[], int tp,  int cod){
     }*/
 
     for (int x=0; x <tp; x++){
-        cout << vec[x].cod << endl;
+        //cout << vec[x].cod << endl;
         if (cod == vec[x].cod){
             pos = x;
             break;
         }
     }
-    cout << "cod de vuelo: " << cod << " en la posicion: " << pos << " cod: " << vec[pos].cod << endl; 
+    //cout << "cod de vuelo: " << cod << " en la posicion: " << pos << " cod: " << vec[pos].cod << endl; 
     return pos;
 }
 
 void compras(t_vuelo vec_v[], int v, t_vuelo vec_p[], int p){
     int tmp;
-    cout << "tope vuelos: " << v << " tope pedidos: " << p << endl;
+    //cout << "tope vuelos: " << v << " tope pedidos: " << p << endl;
     for (int x=0; x < p; x++){
-        cout << "vuelta numero: " << x << endl;
+        //cout << "vuelta numero: " << x << endl;
         tmp = buscar_cod_vuelo(vec_v, v, vec_p[x].cod);
-        cout << "tmp posicion codigo de vuelo: " << tmp << endl;
+        //cout << "tmp posicion codigo de vuelo: " << tmp << endl;
         if (vec_p[x].pac <= vec_v[tmp].psd){
             cout << "dni: " << vec_p[x].dni << " pasajes vendidos: " << vec_p[x].pac << " cod_vuelo: " << vec_p[x].cod << endl;
         }
@@ -130,7 +130,7 @@ void compras(t_vuelo vec_v[], int v, t_vuelo vec_p[], int p){
         }
     }
     for (int x=0; x<v; x++){
-        if (vec_v[x].psnv !=0){
+        if (vec_v[x].psnv != 0){
             cout << "cod_vuelo: " << vec_v[x].cod << " pasajes disponibles: " << vec_v[x].psd << " pasajes no vendidos por falta de disp: " << vec_v[x].psnv - vec_v[x].psd << endl;
         }
     }
